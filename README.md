@@ -51,6 +51,17 @@ http://192.168.2.108/owncloud
 sudo apt-get install conky
 ```
 
+A cool theme : 
+https://www.deviantart.com/bigrza/art/Conky-config-Black-Diamond-134566184
+```
+sudo add-apt-repository ppa:conky-companions/ppa
+sudo apt-get update && sudo apt-get install conkyexaile
+
+```
+
+
+
+
 (see configuration bellow)
 
 ### Photo & multimedia
@@ -60,6 +71,12 @@ sudo apt-get install darktable
 sudo apt-get install geeqie
 sudo apt-get install vlc
 ```
+
+For darktable, it's better to activate openCL capabilities :
+```
+sudo apt install ocl-icd-opencl-dev
+``` 
+
 
 ### Editing
 To edit Photo Analogies magazine, we use both scribus stable and scribus-ng
