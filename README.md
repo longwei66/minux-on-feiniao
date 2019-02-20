@@ -44,25 +44,25 @@ http://192.168.2.108/owncloud
 (see configuration bellow)
 
 ### Photo & multimedia
-`
+```
 sudo apt-get install gimp
 sudo apt-get install darktable
 sudo apt-get install geeqie
 sudo apt-get install vlc
-`
+```
 
 ### Editing
 To edit Photo Analogies magazine, we use both scribus stable and scribus-ng
-`
+```
 sudo add-apt-repository ppa:scribus/ppa
 sudo apt-get update
 sudo apt-get install scribus
 sudo apt-get install scribus-ng
-`
+```
 I use also inkscape for vector graphics
-`
+```
 sudo apt-get install inkscape
-`
+```
 
 ### Coding
 
@@ -78,8 +78,7 @@ sudo apt update
 sudo apt install r-base
 ```
 
-
-R (complete with packages)
+#### Rstudio
 Rstudio (dev version)
 
 
