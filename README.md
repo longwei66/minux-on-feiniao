@@ -106,8 +106,7 @@ sudo apt-get install mutt offlineimap
 ```
 Then for configuration follow the step bellow ...
 
-
-#### irssi
+#### irssi
 ```
 sudo apt-get install irssi
 ```
