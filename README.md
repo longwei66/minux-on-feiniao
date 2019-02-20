@@ -26,7 +26,9 @@ https://www.dashlane.com/fr/download
 
 #### Package management
 To handle packages, I still find synaptic useful.
-`sudo apt-get install synaptic`
+```
+sudo apt-get install synaptic
+```
 
 #### nextcloud
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
@@ -39,7 +41,9 @@ I configure my login and launch of the add at startup.
 http://192.168.2.108/owncloud
 
 #### conky
-`sudo apt-get install conky`
+```
+sudo apt-get install conky
+```
 
 (see configuration bellow)
 
