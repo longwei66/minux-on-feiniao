@@ -24,6 +24,12 @@ https://www.dashlane.com/fr/download
 
 ### System
 
+#### Vim
+For most of my admin work and text edition I use Vim
+```
+sudo apt-get install vim
+``` 
+
 #### Package management
 To handle packages, I still find synaptic useful.
 ```
@@ -83,16 +89,38 @@ sudo apt install r-base
 ```
 
 #### Rstudio
-Rstudio (dev version)
+Rstudio (preview version)
+```
+wget https://s3.amazonaws.com/rstudio-ide-build/desktop/trusty/amd64/rstudio-1.2.1280-amd64.deb
+sudo apt-get install libclang-dev
+sudo dpkg -i rstudio-1.2.1280-amd64.deb
+```
 
 
 
 ### e-mail & communication
-irssi
-signal
-mutt
-imap ???
+
+#### mutt & offlineimap
+```
+sudo apt-get install mutt offlineimap
+```
+Then for configuration follow the step bellow ...
 
 
+#### irssi
+```
+sudo apt-get install irssi
+```
 
+
+#### signal
+
+Install and add device
+
+```
+sudo apt-get install curl
+curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+sudo apt update && sudo apt install signal-desktop
+```
 
