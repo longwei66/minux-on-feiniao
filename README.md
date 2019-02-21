@@ -48,21 +48,20 @@ http://192.168.2.108/owncloud
 
 #### conky
 ```
-sudo apt-get install conky
+sudo apt-get install conky-all
 ```
 
-A cool theme : 
+See `./conky` folder in this repo for conky configuration.
+
+
+
+Other cool theme (not tested)
 https://www.deviantart.com/bigrza/art/Conky-config-Black-Diamond-134566184
 ```
 sudo add-apt-repository ppa:conky-companions/ppa
 sudo apt-get update && sudo apt-get install conkyexaile
 
 ```
-
-
-
-
-(see configuration bellow)
 
 ### Photo & multimedia
 ```
