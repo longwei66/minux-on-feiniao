@@ -92,9 +92,11 @@ Bellow are the lines to add at the end of `/etc/fstab` file which should contain
 #### nextcloud
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
 https://launchpad.net/~nextcloud-devs/+archive/ubuntu/client
-`sudo add-apt-repository ppa:nextcloud-devs/client`
-`sudo apt-get update`
-`sudo apt-get install nextcloud-client`
+```
+sudo add-apt-repository ppa:nextcloud-devs/client
+sudo apt-get update
+sudo apt-get install nextcloud-client
+```
 
 I configure my login and launch of the add at startup.
 http://192.168.2.108/owncloud
