@@ -60,7 +60,7 @@ mkdir lagrange_multimedia
 mkdir lagrange_photos_videos
 mkdir lagrange_atelier
 mkdir homes
-mkdir homes/lagrande_barthelemy
+mkdir homes/lagrange_barthelemy
 ```
 
 Then I need to install cifs utils to get the samba access.
@@ -78,22 +78,16 @@ And then change the access rights.
 sudo chmod 600 /etc/cifspwd
 ```
 
-
 Bellow are the lines to add at the end of `/etc/fstab` file which should contain :
 
-
-
 ```
-# NAS Lagrange
+# NAS 
 //192.168.2.108/photographie /media/lagrange/lagrange_photographie cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
 //192.168.2.108/multimedia /media/lagrange/lagrange_multimedia cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
 //192.168.2.108/photos_videos /media/lagrange/lagrange_photos_videos cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
 //192.168.2.108/atelier /media/lagrange/lagrange_atelier cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
 //192.168.2.108/homes/barthelemy /media/lagrange/homes/lagrange_barthelemy cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
-
 ```
-
-
 
 #### nextcloud
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
@@ -104,6 +98,13 @@ https://launchpad.net/~nextcloud-devs/+archive/ubuntu/client
 
 I configure my login and launch of the add at startup.
 http://192.168.2.108/owncloud
+
+
+### Desktop
+
+#### gnome 3
+I'd like to remove icons from the desktop, first install `sudo apt-get install dconf-editor`
+Launch `dconf-editor` and Locate /org/gnome/desktop/background/ and untick the show desktop icons.
 
 #### conky
 ```
