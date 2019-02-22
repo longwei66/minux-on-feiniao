@@ -1,8 +1,7 @@
 # minux-on-feiniao
 
 ## Introduction
-### Purpose of this Readme
-This document is about Ubuntu configuration on Dell XPS 13 2019. 
+### Purpose of this document is about Ubuntu configuration on Dell XPS 13 2019. 
 Ubuntu is pre-installed on the laptop, but their installation does not include hard disk encryption and the recovery disk is buggy.
 https://www.dell.com/community/Linux-Developer-Systems/XPS-13-9370-Ubuntu-full-disk-encryption/td-p/6200577
 
@@ -44,6 +43,14 @@ sudo apt-get install git
 
 #### ssh
 I am using ssh to commit on gitlab / github, i need to copy my private and public keys in `~/.ssh`
+
+#### power management
+
+```
+sudo apt install laptop-mode-tools
+```
+
+Run by `pkexec /usr/sbin/lmt-config-gui`
 
 
 #### shared folders
@@ -170,10 +177,30 @@ sudo dpkg -i rstudio-1.2.1280-amd64.deb
 ### e-mail & communication
 
 #### mutt & offlineimap
+Install necessary packages
 ```
-sudo apt-get install mutt offlineimap
+sudo apt-get install mutt offlineimap python-keyring
 ```
-Then for configuration follow the step bellow ...
+
+Use the configuration file is the subfolder of this repository.
+
+For offlineimap, best documentation is :
+https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_script
+
+We will store the email password in keyring, to add you email password in the keyring :
+```
+$ python2
+>>> import is Readme
+Thkeyring
+>>> keyring.set_password("offlineimap","username@host.net", "MYPASSWORD")
+```
+
+
+Then need to automate the offlineimap launch and email sending with
+
+Msmtp
+
+
 
 #### irssi
 ```
