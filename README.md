@@ -36,6 +36,65 @@ To handle packages, I still find synaptic useful.
 sudo apt-get install synaptic
 ```
 
+#### Git
+Git is a must !
+```
+sudo apt-get install git
+```
+
+#### ssh
+I am using ssh to commit on gitlab / github, i need to copy my private and public keys in `~/.ssh`
+
+
+#### shared folders
+I use a NAS and basically need to mount the shared folders I use. I need here to modify `/etc/fstab`
+
+First I need to create the directory structure 
+
+```
+sudo mkdir /media/lagrange
+sudo chown longwei:longwei /media/lagrange/
+cd /media/lagrange/
+mkdir lagrange_photographie
+mkdir lagrange_multimedia
+mkdir lagrange_photos_videos
+mkdir lagrange_atelier
+mkdir homes
+mkdir homes/lagrande_barthelemy
+```
+
+Then I need to install cifs utils to get the samba access.
+```
+sudo apt-get install cifs-utils
+```
+
+Then I need to create a protected file to store my samba password as root `sudo vim /etc/cifspwd`
+```
+username=<username on server>
+password=<password for that username>
+```
+And then change the access rights.
+```
+sudo chmod 600 /etc/cifspwd
+```
+
+
+Bellow are the lines to add at the end of `/etc/fstab` file which should contain :
+
+
+
+```
+# NAS Lagrange
+//192.168.2.108/photographie /media/lagrange/lagrange_photographie cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
+//192.168.2.108/multimedia /media/lagrange/lagrange_multimedia cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
+//192.168.2.108/photos_videos /media/lagrange/lagrange_photos_videos cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
+//192.168.2.108/atelier /media/lagrange/lagrange_atelier cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
+//192.168.2.108/homes/barthelemy /media/lagrange/homes/lagrange_barthelemy cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
+
+```
+
+
+
 #### nextcloud
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
 https://launchpad.net/~nextcloud-devs/+archive/ubuntu/client
@@ -54,14 +113,6 @@ sudo apt-get install conky-all
 See `./conky` folder in this repo for conky configuration.
 
 
-
-Other cool theme (not tested)
-https://www.deviantart.com/bigrza/art/Conky-config-Black-Diamond-134566184
-```
-sudo add-apt-repository ppa:conky-companions/ppa
-sudo apt-get update && sudo apt-get install conkyexaile
-
-```
 
 ### Photo & multimedia
 ```
@@ -111,7 +162,6 @@ wget https://s3.amazonaws.com/rstudio-ide-build/desktop/trusty/amd64/rstudio-1.2
 sudo apt-get install libclang-dev
 sudo dpkg -i rstudio-1.2.1280-amd64.deb
 ```
-
 
 
 ### e-mail & communication
