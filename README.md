@@ -247,7 +247,7 @@ We need to automate the offlineimap launch (TODO)
 
 ### Step four: send emails with `msmtp`
 
-For email sending we use `msmtp`, a configuration file `.msmtp.rc` is also
+For email sending we use `msmtp`, a configuration file [`.msmtprc`](./mutt/.msmtprc) is also
 available in the `mutt` subfolder of this repository. You need to make sure that
 the smtp password of your email account is stored in you keyring.
 ```
@@ -260,7 +260,7 @@ secret-tool store --label=msmtp host xxx.net service smtp user yyyy
 Finally we can configure `mutt`, you will find in the subfolder
 both `.muttrc` file and `.mutt/` folder to install in your `home` folder. 
 
-## messengine
+## messenging
 
 ### irssi
 ```
