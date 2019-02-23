@@ -226,7 +226,7 @@ sudo apt-get install mutt offlineimap python-keyring msmtp msmtp-gnome
 ### Step one: `offlineimap`
 
 Let's use the configuration file in the `mutt` subfolder of this repository
-(`.offlineimaprc` and `.offlineimap` dir) . In addition, as usual archlinux is
+([`.offlineimaprc`](./mutt/.offlineimaprc) and `.offlineimap` dir) . In addition, as usual archlinux is
 the best documentation : 
 https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_script
 
