@@ -10,38 +10,43 @@ So I made a fresh install of ubuntu 18.04
 ### About the system
 `Linux feiniao 4.18.0-15-generic #16~18.04.1-Ubuntu SMP Thu Feb 7 14:06:04 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux`
 
-## What to configure after first login
-The systems works off the shelve, basically I just had to install my favorite packages and tweak few stuffs.
+## Web & password management
 
+### `chromium-browser`
 
-## Additionnal software install
+This tend to be my current browser with firefox install per default.
+```
+sudo apt-get install chromium-browser
+```
 
-### Web & password management
-Firs I install `chromium-browser` which tend to be my current browser.
+### Dashlane
+
 Then I install dashlane to get my password vault
 https://www.dashlane.com/fr/download
 
-### System
+## System
 
-#### Vim
+### Vim
 For most of my admin work and text edition I use Vim
 ```
 sudo apt-get install vim
 ``` 
 
-#### Package management
+### Package management
+
 To handle packages, I still find synaptic useful.
 ```
 sudo apt-get install synaptic
 ```
 
-#### Git
+### Git
+
 Git is a must !
 ```
 sudo apt-get install git
 ```
 
-#### ssh & pgp keys
+### ssh & pgp keys
 I am using ssh to commit on gitlab / github, i need to copy my private and public keys in `~/.ssh`
 
 I use gnome-keyring to store all keys (ssh and pgp), `seahorse` is the program
@@ -51,7 +56,9 @@ In order to add manually some password, the best is to use `secret-tool`.
 sudo apt-get install libsecret-tools
 ```
 
-#### power management
+### power management
+
+Not super convinced this is usefull !
 
 ```
 sudo apt install laptop-mode-tools
@@ -59,8 +66,9 @@ sudo apt install laptop-mode-tools
 
 Run by `pkexec /usr/sbin/lmt-config-gui`
 
+## Local network
 
-#### shared folders
+### shared folders
 I use a NAS and basically need to mount the shared folders I use. I need here to modify `/etc/fstab`
 
 First I need to create the directory structure 
@@ -105,7 +113,7 @@ Bellow are the lines to add at the end of `/etc/fstab` file which should contain
 
 TODO : seems the partitions are not mounted automatically at reboot ???
 
-#### nextcloud
+### nextcloud
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
 https://launchpad.net/~nextcloud-devs/+archive/ubuntu/client
 ```
@@ -118,22 +126,27 @@ I configure my login and launch of the add at startup.
 http://192.168.2.108/owncloud
 
 
-### Desktop
+## Desktop
 
-#### gnome 3
+### gnome 3
+
 I'd like to remove icons from the desktop, first install `sudo apt-get install dconf-editor`
 Launch `dconf-editor` and Locate /org/gnome/desktop/background/ and untick the show desktop icons.
 
-#### conky
+### conky
 ```
 sudo apt-get install conky-all
 ```
 
+TODO
 See `./conky` folder in this repo for conky configuration.
 
 
 
-### Photo & multimedia
+## Photo & multimedia
+
+### Must have packages
+
 ```
 sudo apt-get install gimp
 sudo apt-get install darktable
@@ -141,32 +154,45 @@ sudo apt-get install geeqie
 sudo apt-get install vlc
 ```
 
+### Darktable extra config
+
 For darktable, it's better to activate openCL capabilities :
+
 ```
 sudo apt install ocl-icd-opencl-dev
 ``` 
+TODO fix the config issues
 
 
-### Editing
+## Editing
+
+### `scribus`
+
 To edit Photo Analogies magazine, we use both scribus stable and scribus-ng
+
 ```
 sudo add-apt-repository ppa:scribus/ppa
 sudo apt-get update
 sudo apt-get install scribus
 sudo apt-get install scribus-ng
 ```
+
+### `inkscape`
+
 I use also inkscape for vector graphics
+
 ```
 sudo apt-get install inkscape
 ```
 
-### Coding
+## Coding
 
-#### R
+### R
 
 I follow this guide to install latest R packages
 https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04
 (step1)
+
 ```
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
@@ -174,7 +200,8 @@ sudo apt update
 sudo apt install r-base
 ```
 
-#### Rstudio
+### Rstudio
+
 Rstudio (preview version)
 ```
 wget https://s3.amazonaws.com/rstudio-ide-build/desktop/trusty/amd64/rstudio-1.2.1280-amd64.deb
@@ -183,26 +210,30 @@ sudo dpkg -i rstudio-1.2.1280-amd64.deb
 ```
 
 
-### e-mail & communication
+## e-mail
 
-#### mutt & offlineimap
+### Get packages 
 
 Install necessary packages, for emailing we need, `mutt` as a client, 
 `offlineimap` to get emails, `msmtp` to send emails (in fact `msmtp-gnome` pacakge
 to  get keyring support).  Email passwork will be stored in gnome keyring and we
 will use python keyring to access the keyring.
 
-***Step zero***, get packages : 
 ```
 sudo apt-get install mutt offlineimap python-keyring msmtp msmtp-gnome
 ```
 
-***Step one: `offlineimap`***, let's use the configuration file in the `mutt`
-subfolder of this repository (`.offlineimaprc` and `.offlineimap` dir) . In addition, as usual archlinux is the best 
-documentation : 
+### Step one: `offlineimap`
+
+Let's use the configuration file in the `mutt` subfolder of this repository
+(`.offlineimaprc` and `.offlineimap` dir) . In addition, as usual archlinux is
+the best documentation : 
 https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_script
 
-***Step two***, we will store the email password in keyring, to add you email password in the keyring :
+### Step two: password & auth management
+
+We will store the email password in keyring, to add you email password in the keyring :
+
 ```
 $ python2
 >>> import is Readme
@@ -210,10 +241,13 @@ Thkeyring
 >>> keyring.set_password("offlineimap","username@host.net", "MYPASSWORD")
 ```
 
-***Step three***, we need to automate the offlineimap launch (TODO
-)
+### Step three: automation of get emails
 
-***Step four***, for email sending we use `msmtp`, a configuration file `.msmtp.rc` is also
+We need to automate the offlineimap launch (TODO)
+
+### Step four: send emails with `msmtp`
+
+For email sending we use `msmtp`, a configuration file `.msmtp.rc` is also
 available in the `mutt` subfolder of this repository. You need to make sure that
 the smtp password of your email account is stored in you keyring.
 ```
@@ -221,16 +255,20 @@ secret-tool store --label=msmtp host xxx.net service smtp user yyyy
 ```
 
 
-***Step five***, finally we can configure `mutt`, you will find in the subfolder
+### Step five: `mutt` configuration
+
+Finally we can configure `mutt`, you will find in the subfolder
 both `.muttrc` file and `.mutt/` folder to install in your `home` folder. 
 
-#### irssi
+## messengine
+
+### irssi
 ```
 sudo apt-get install irssi
 ```
 
 
-#### signal
+### signal
 
 Install and add device
 
@@ -241,3 +279,15 @@ echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sud
 sudo apt update && sudo apt install signal-desktop
 ```
 
+## Virtualisation
+
+### Virtualbox packages
+
+I use virtualbox to virtualize machines (other linux distrib) or other OS for some
+tests.
+
+```
+sudo apt-get install virtualbox
+```
+
+### Virtualbox extensions
