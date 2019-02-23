@@ -41,8 +41,15 @@ Git is a must !
 sudo apt-get install git
 ```
 
-#### ssh
+#### ssh & pgp keys
 I am using ssh to commit on gitlab / github, i need to copy my private and public keys in `~/.ssh`
+
+I use gnome-keyring to store all keys (ssh and pgp), `seahorse` is the program
+to use for import & export. 
+In order to add manually some password, the best is to use `secret-tool`.
+```
+sudo apt-get install libsecret-tools
+```
 
 #### power management
 
@@ -95,6 +102,8 @@ Bellow are the lines to add at the end of `/etc/fstab` file which should contain
 //192.168.2.108/atelier /media/lagrange/lagrange_atelier cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
 //192.168.2.108/homes/barthelemy /media/lagrange/homes/lagrange_barthelemy cifs user,uid=longwei,gid=users,rw,suid,credentials=/etc/cifspwd 0 0
 ```
+
+TODO : seems the partitions are not mounted automatically at reboot ???
 
 #### nextcloud
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
@@ -177,17 +186,23 @@ sudo dpkg -i rstudio-1.2.1280-amd64.deb
 ### e-mail & communication
 
 #### mutt & offlineimap
-Install necessary packages
+
+Install necessary packages, for emailing we need, `mutt` as a client, 
+`offlineimap` to get emails, `msmtp` to send emails (in fact `msmtp-gnome` pacakge
+to  get keyring support).  Email passwork will be stored in gnome keyring and we
+will use python keyring to access the keyring.
+
+***Step zero***, get packages : 
 ```
-sudo apt-get install mutt offlineimap python-keyring
+sudo apt-get install mutt offlineimap python-keyring msmtp msmtp-gnome
 ```
 
-Use the configuration file is the subfolder of this repository.
-
-For offlineimap, best documentation is :
+***Step one: `offlineimap`***, let's use the configuration file in the `mutt`
+subfolder of this repository (`.offlineimaprc` and `.offlineimap` dir) . In addition, as usual archlinux is the best 
+documentation : 
 https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_script
 
-We will store the email password in keyring, to add you email password in the keyring :
+***Step two***, we will store the email password in keyring, to add you email password in the keyring :
 ```
 $ python2
 >>> import is Readme
@@ -195,12 +210,19 @@ Thkeyring
 >>> keyring.set_password("offlineimap","username@host.net", "MYPASSWORD")
 ```
 
+***Step three***, we need to automate the offlineimap launch (TODO
+)
 
-Then need to automate the offlineimap launch and email sending with
+***Step four***, for email sending we use `msmtp`, a configuration file `.msmtp.rc` is also
+available in the `mutt` subfolder of this repository. You need to make sure that
+the smtp password of your email account is stored in you keyring.
+```
+secret-tool store --label=msmtp host xxx.net service smtp user yyyy
+```
 
-Msmtp
 
-
+***Step five***, finally we can configure `mutt`, you will find in the subfolder
+both `.muttrc` file and `.mutt/` folder to install in your `home` folder. 
 
 #### irssi
 ```
