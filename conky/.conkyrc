@@ -81,21 +81,23 @@ ${template1 Top}                ${template2}${top_mem name 1}               ${te
                                 ${template2}${top_mem name 5}               ${template3}${top_mem mem 5}
 
 ${template0 Filesystem}
-${color darkred}${fs_bar 15,560 /}
+${color darkgreen}${fs_bar 15,560 /}
 ${template1 /} ${fs_used /} of ${fs_size /} free ${fs_free}
 
-${template1 IO\ Read}           ${template2}     ${diskio_read}             ${template3}${diskiograph_read}
-${template1 IO\ Write}          ${template2}     ${diskio_write}            ${template3}$diskiograph_write
+${template1 IO\ Read}           ${template2}     ${diskio_read}             ${template3}${diskiograph_read 20,250}
+${template1 IO\ Write}          ${template2}     ${diskio_write}            ${template3}${diskiograph_write 20,250}
 
 ${template0 Networking}
 ${if_existing /proc/net/route wlp2s0}\
 ${template1 IP}                                                             ${template3}${addr wlp2s0}
 ${template1 AP}                                                             ${template3}${wireless_essid wlp2s0}
-${template1 Signal}             ${template2}   ${wireless_link_qual_perc wlp2s0} ${template3}${wireless_link_bar wlp2s0}
+${template1 Signal}             ${template2}   ${wireless_link_qual_perc wlp2s0} ${template3}${wireless_link_bar 10,250 wlp2s0}
 ${template1 Download}           ${template2}   ${downspeed wlp2s0} ${template3}${downspeedgraph wlp2s0 80,250}
 ${template1 Upload}             ${template2}   ${upspeed wlp2s0}   ${template3}${upspeedgraph wlp2s0 80,250}
 ${template1 Total Down/Up}                                                  ${template3}${totaldown wlp2s0}↓ / ${totalup wlp2s0}↑
 ${endif}\
+
+
 ${template0 Power} 
 ${color darkblue}${battery_bar 15,560}
 ${template1 Remaining}          ${template2}     ${battery_time}            ${template3}${battery_short}

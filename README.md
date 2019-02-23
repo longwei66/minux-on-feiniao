@@ -138,10 +138,10 @@ Launch `dconf-editor` and Locate /org/gnome/desktop/background/ and untick the s
 sudo apt-get install conky-all
 ```
 
-TODO
-See `./conky` folder in this repo for conky configuration.
+See [./conky/.conkyrc](./conky/.conkyrc) in this repo for conky configuration.
+Thanks : https://www.splitbrain.org/blog/2016-11/20-simple_conky_setup
 
-
+Then add it to startup with `gnome-session-properties`
 
 ## Photo & multimedia
 
