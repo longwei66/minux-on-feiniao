@@ -191,6 +191,15 @@ https://wiki.scribus.net/canvas/Getting_and_installing_ICC_profiles
 
 On Linux/Unix put your personal profiles into $HOME/.local/share/color/icc or $home/.color/icc (depending on the distribution and its version). System wide profiles for all users must be placed into /usr/share/color/icc.
 
+### `pdftk`
+
+I use pdftk to merge pdfs,
+
+https://wilransz.com/pdftk-on-ubuntu-18-04/
+
+```
+sudo snap install pdftk
+```
 
 
 ### `inkscape`
