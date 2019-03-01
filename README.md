@@ -34,9 +34,11 @@ sudo apt-get install vim
 
 ### Package management
 
-To handle packages, I still find synaptic useful.
+To handle packages, I still find synaptic useful & apt-file to search
+files in packages.
 ```
 sudo apt-get install synaptic
+sudo apt install apt-file
 ```
 
 ### Git
@@ -177,6 +179,20 @@ sudo apt-get install scribus
 sudo apt-get install scribus-ng
 ```
 
+Then you need to install color profiles for printing :
+
+Download here :
+http://www.eci.org/en/downloads
+http://www.eci.org/_media/downloads/icc_profiles_from_eci/eci_offset_2009.zip
+
+Add the profiles in your local config files :
+
+https://wiki.scribus.net/canvas/Getting_and_installing_ICC_profiles
+
+On Linux/Unix put your personal profiles into $HOME/.local/share/color/icc or $home/.color/icc (depending on the distribution and its version). System wide profiles for all users must be placed into /usr/share/color/icc.
+
+
+
 ### `inkscape`
 
 I use also inkscape for vector graphics
@@ -226,7 +242,7 @@ sudo apt-get install mutt offlineimap python-keyring msmtp msmtp-gnome
 ### Step one: `offlineimap`
 
 Let's use the configuration file in the `mutt` subfolder of this repository
-([`.offlineimaprc`](./mutt/.offlineimaprc) and `.offlineimap` dir) . In addition, as usual archlinux is
+([`.offlineimaprc`](./mutt/.offlineimaprc)) . In addition, as usual archlinux is
 the best documentation : 
 https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_script
 
