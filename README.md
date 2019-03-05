@@ -24,6 +24,18 @@ sudo apt-get install chromium-browser
 Then I install dashlane to get my password vault
 https://www.dashlane.com/fr/download
 
+### Flash
+
+Almost dead in 2019 but still some annoying websites uses it.
+https://websiteforstudents.com/install-adobe-flash-player-on-ubuntu-18-04-lts-beta-desktop/
+```
+sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+sudo apt install adobe-flashplugin browser-plugin-freshplayer-pepperflash
+
+```
+
+
+
 ## System
 
 ### Vim
