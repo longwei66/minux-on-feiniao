@@ -24,6 +24,21 @@ sudo apt-get install chromium-browser
 Then I install dashlane to get my password vault
 https://www.dashlane.com/fr/download
 
+I needed to install the windows client for some maintenance (there is only a
+web client for linux)
+
+***Install of wine***
+
+Install Wine from Ubuntu repository
+```
+sudo apt install wine64
+sudo apt-get remove winbind && sudo apt-get install winbind
+sudo atp-get install winetricks
+```
+Launch winetricks to install vcrun2015 DLL.
+
+Donwload the dashlane windows client and wine it from a terminal, this should work.
+
 ### Flash
 
 Almost dead in 2019 but still some annoying websites uses it.
