@@ -10,6 +10,30 @@ So I made a fresh install of ubuntu 18.04
 ### About the system
 `Linux feiniao 4.18.0-15-generic #16~18.04.1-Ubuntu SMP Thu Feb 7 14:06:04 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux`
 
+## System
+
+### Touchpad
+
+There could be a confusion by the daemon due to two touchpad detected. See
+https://www.dell.com/support/article/fr/fr/frbsdt1/sln308258/precision-xps-ubuntu-general-touchpad-mouse-issue-fix?lang=en
+
+Edit this file
+```
+sudo vim /usr/share/X11/xorg.conf.d/51-synaptics-quirks.conf 
+```
+
+Add at the end :
+```
+Section "InputClass"
+        Identifier "SynPS/2 Synaptics TouchPad"
+        MatchProduct "SynPS/2 Synaptics TouchPad"
+        MatchIsTouchpad "on"
+        MatchOS "Linux"
+        MatchDevicePath "/dev/input/event*"
+        Option "Ignore" "on"
+EndSection
+```
+
 ## Web & password management
 
 ### `chromium-browser`
@@ -77,6 +101,7 @@ sudo apt-get install git
 
 ### ssh & pgp keys
 I am using ssh to commit on gitlab / github, i need to copy my private and public keys in `~/.ssh`
+Check they are chmod 600.
 
 I use gnome-keyring to store all keys (ssh and pgp), `seahorse` is the program
 to use for import & export. 
