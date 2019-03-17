@@ -12,9 +12,10 @@ So I made a fresh install of ubuntu 18.04
 
 ## System
 
-### Touchpad
+### Touch
 
-There could be a confusion by the daemon due to two touchpad detected. See
+There is an issue with the standard installation and configuration of the touchpad
+which leads in jumping cursors. There could be a confusion by the daemon due to two touchpad detected. See Dell's fix to this issue.
 https://www.dell.com/support/article/fr/fr/frbsdt1/sln308258/precision-xps-ubuntu-general-touchpad-mouse-issue-fix?lang=en
 
 Edit this file
@@ -33,6 +34,10 @@ Section "InputClass"
         Option "Ignore" "on"
 EndSection
 ```
+This is supposed to work but I have still some issues and should look for a
+reduction of the sensitivity of the device.
+
+Seems switching to Wayland ubuntu solves the problem.
 
 ## Web & password management
 
@@ -71,6 +76,13 @@ https://websiteforstudents.com/install-adobe-flash-player-on-ubuntu-18-04-lts-be
 sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
 sudo apt install adobe-flashplugin browser-plugin-freshplayer-pepperflash
 
+```
+
+### qBittorent
+
+
+```
+sudo apt-get install qBittorrent
 ```
 
 
@@ -112,11 +124,14 @@ sudo apt-get install libsecret-tools
 
 ### power management
 
-Not super convinced this is usefull !
+http://tipsonubuntu.com/2018/11/18/quick-tip-improve-battery-life-ubuntu-18-04-higher/
 
 ```
-sudo apt install laptop-mode-tools
+sudo apt install tlp
+sudo add-apt-repository ppa:linuxuprising/apps
+sudo apt install tlpui
 ```
+
 
 Run by `pkexec /usr/sbin/lmt-config-gui`
 
@@ -343,6 +358,11 @@ both `.muttrc` file and `.mutt/` folder to install in your `home` folder.
 ```
 sudo apt-get install irssi
 ```
+
+### zoom video conferencing
+
+Download and install the latest package from Zoom
+https://zoom.us/download
 
 
 ### signal
