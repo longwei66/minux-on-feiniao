@@ -132,8 +132,13 @@ sudo add-apt-repository ppa:linuxuprising/apps
 sudo apt install tlpui
 ```
 
-
 Run by `pkexec /usr/sbin/lmt-config-gui`
+
+Alternatively, there is another utility which seems to be better : `powertops`
+https://wiki.archlinux.org/index.php/powertop
+
+
+
 
 ## Local network
 
@@ -276,6 +281,13 @@ I use also inkscape for vector graphics
 ```
 sudo apt-get install inkscape
 ```
+
+### `Xournal`
+
+Ligthweight note taking and pdf annotator. I install it from the Ubuntu software
+center.
+
+
 
 ## Coding
 
