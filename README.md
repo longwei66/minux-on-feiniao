@@ -138,6 +138,35 @@ Alternatively, there is another utility which seems to be better : `powertops`
 https://wiki.archlinux.org/index.php/powertop
 
 
+All of that didn't work very well, I finally found a bug from the previous generation
+which seems still valid in the xps 13 9380. Basically, the laptop goes to sleep in
+sleep2idle instead of deep sleep. 
+
+The fix is described here :
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1808957
+
+> sudo journalctl | grep "PM: suspend" | tail -2. If the output is
+> PM: suspend entry (s2idle)
+> PM: suspend exit
+> cat /sys/power/mem_sleep showed
+> [s2idle] deep
+> As a temporary fix, I typed
+> echo deep > /sys/power/mem_sleep
+> as a root user (sudo -i).
+> Then the output of cat /sys/power/mem_sleep was
+> s2idle [deep]
+> After suspending now,
+> sudo journalctl | grep "PM: suspend" | tail -2 returns
+> PM: suspend entry (deep)
+> PM: suspend exit
+> I have made this permanent by editing
+> /etc/default/grub
+> and replacing
+> GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+> with
+> GRUB_CMDLINE_LINUX_DEFAULT="quiet splash mem_sleep_default=deep"
+> then regenerating my grub configuration (sudo grub-mkconfig -o /boot/grub/grub.cfg).
+> This appears to be working with no ill effects.
 
 
 ## Local network
