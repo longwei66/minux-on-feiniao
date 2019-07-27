@@ -429,3 +429,19 @@ sudo apt-get install virtualbox
 ```
 
 ### Virtualbox extensions
+
+
+## Other
+
+### Sonos
+bof bof
+https://www.ubuntupit.com/how-to-install-sonos-controller-app-noson-in-ubuntu/
+
+bof
+https://github.com/pascalopitz/unoffical-sonos-controller-for-linux/releases
+sudo dpkg -i sonos-controller-unofficial-amd64.deb
+
+
+### qgis
+sudo apt-get install qgis
+
