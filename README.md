@@ -246,6 +246,11 @@ Thanks : https://www.splitbrain.org/blog/2016-11/20-simple_conky_setup
 
 Then add it to startup with `gnome-session-properties`
 
+### Chinese
+
+https://www.pinyinjoe.com/linux/ubuntu-18-gnome-chinese-setup.htm
+
+
 ## Photo & multimedia
 
 ### Must have packages
