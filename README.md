@@ -1,24 +1,40 @@
-# minux-on-feiniao
+# minux on `feiniao`
 
-## Introduction
-### Purpose of this document is about Ubuntu configuration on Dell XPS 13 2019. 
-Ubuntu is pre-installed on the laptop, but their installation does not include hard disk encryption and the recovery disk is buggy.
-https://www.dell.com/community/Linux-Developer-Systems/XPS-13-9370-Ubuntu-full-disk-encryption/td-p/6200577
+`feiniao` (肥鸟 or 'fat bird' in chinese) is the name of my laptop and this 
+repository gathers all the documentation and scripts to install and fine tune
+ubuntu.
 
-So I made a fresh install of ubuntu 18.04
 
-### About the system
+## Ubuntu configuration on Dell XPS 13 2019. 
+
+Ubuntu is pre-installed on this Dell laptop, but their installation does not
+include hard disk encryption. I attempted to use the recovery disk but failed to
+install it again but it's buggy (hdd encryption password not recognized).
+
+See this [post](https://www.dell.com/community/Linux-Developer-Systems/XPS-13-9370-Ubuntu-full-disk-encryption/td-p/6200577) for details.
+
+So I decided to make a **fresh install** of ubuntu 18.04.
+
+__About the system__
+
 `Linux feiniao 4.18.0-15-generic #16~18.04.1-Ubuntu SMP Thu Feb 7 14:06:04 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux`
 
-## System
+## System configuration
 
-### Touch
+In this part I come back on the essential points to configure or install the
+base system.
 
-There is an issue with the standard installation and configuration of the touchpad
-which leads in jumping cursors. There could be a confusion by the daemon due to two touchpad detected. See Dell's fix to this issue.
+### Touchpad
+
+There is an issue with the standard installation and configuration of the 
+touchpad which leads in jumping cursors. There could be a confusion by the 
+daemon due to two touchpad detected. 
+
+See Dell's fix to this issue.
 https://www.dell.com/support/article/fr/fr/frbsdt1/sln308258/precision-xps-ubuntu-general-touchpad-mouse-issue-fix?lang=en
 
-Edit this file
+You have to edit this file
+
 ```
 sudo vim /usr/share/X11/xorg.conf.d/51-synaptics-quirks.conf 
 ```
@@ -34,10 +50,142 @@ Section "InputClass"
         Option "Ignore" "on"
 EndSection
 ```
+
 This is supposed to work but I have still some issues and should look for a
 reduction of the sensitivity of the device.
 
-Seems switching to Wayland ubuntu solves the problem.
+**Note**: Seems switching to Wayland ubuntu solves the problem.
+
+### Vim
+
+For most of my admin work and text edition I use Vim
+```
+sudo apt-get install vim
+``` 
+
+### Package management
+
+To handle packages, I still find synaptic useful & apt-file to search
+files in packages.
+
+```
+sudo apt-get install synaptic
+sudo apt install apt-file
+```
+
+### Git
+
+Git is a must !
+
+```
+sudo apt-get install git
+```
+
+### ssh & pgp keys
+
+I am using ssh to commit on gitlab / github, i need to copy my private and 
+public keys in `~/.ssh` and check they are chmod 600.
+
+I use gnome-keyring to store all keys (ssh and pgp), `seahorse` is the program
+to use for import & export. 
+In order to add manually some password, the best is to use `secret-tool`.
+
+```
+sudo apt-get install libsecret-tools
+```
+
+### power management
+
+It didn't work out of the box for me as the battery was drained quickly while on
+suspend.
+
+I tried first this approach :http://tipsonubuntu.com/2018/11/18/quick-tip-improve-battery-life-ubuntu-18-04-higher/
+
+```
+sudo apt install tlp
+sudo add-apt-repository ppa:linuxuprising/apps
+sudo apt install tlpui
+```
+
+Run by `pkexec /usr/sbin/lmt-config-gui`
+
+Alternatively, there is another utility which seems to be better : `powertops`
+https://wiki.archlinux.org/index.php/powertop
+
+
+All of that didn't work very well, I finally found a bug from the previous
+generation which seems still valid in the xps 13 9380. Basically, the laptop 
+goes to sleep in sleep2idle instead of deep sleep. 
+
+The fix is described here :
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1808957
+
+```
+sudo journalctl | grep "PM: suspend" | tail -2.
+```
+If the output is
+```
+PM: suspend entry (s2idle)
+PM: suspend exit
+```
+```
+cat /sys/power/mem_sleep
+```
+showed
+```
+[s2idle] deep
+```
+As a temporary fix, I typed
+```
+echo deep > /sys/power/mem_sleep
+```
+as a root user (sudo -i).
+Then the output of 
+```
+cat /sys/power/mem_sleep was
+s2idle [deep]
+```
+After suspending now,
+```
+sudo journalctl | grep "PM: suspend" | tail -2 returns
+PM: suspend entry (deep)
+PM: suspend exit
+```
+I have made this permanent by editing
+```
+sudo vim /etc/default/grub
+```
+and replacing
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+```
+with
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash mem_sleep_default=deep"
+```
+then regenerating my grub configuration :
+```
+sudo grub-mkconfig -o /boot/grub/grub.cfg).
+```
+This appears to be working with no ill effects.
+
+
+### Environement variables
+
+I store some of the usefull code (API credentials for instance) as environment
+variable.
+
+You can edit  `.bash_profile` to store these :
+
+```
+export API_1="my cool code here"
+export API_2="another_one"
+
+```
+
+If you are using travis for continuous integration with github, it's possible
+then to encrypt you variable and add these to your project yaml file (see later)
+
 
 ## Web & password management
 
@@ -71,7 +219,9 @@ Donwload the dashlane windows client and wine it from a terminal, this should wo
 ### Flash
 
 Almost dead in 2019 but still some annoying websites uses it.
+See : 
 https://websiteforstudents.com/install-adobe-flash-player-on-ubuntu-18-04-lts-beta-desktop/
+
 ```
 sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
 sudo apt install adobe-flashplugin browser-plugin-freshplayer-pepperflash
@@ -87,86 +237,7 @@ sudo apt-get install qBittorrent
 
 
 
-## System
 
-### Vim
-For most of my admin work and text edition I use Vim
-```
-sudo apt-get install vim
-``` 
-
-### Package management
-
-To handle packages, I still find synaptic useful & apt-file to search
-files in packages.
-```
-sudo apt-get install synaptic
-sudo apt install apt-file
-```
-
-### Git
-
-Git is a must !
-```
-sudo apt-get install git
-```
-
-### ssh & pgp keys
-I am using ssh to commit on gitlab / github, i need to copy my private and public keys in `~/.ssh`
-Check they are chmod 600.
-
-I use gnome-keyring to store all keys (ssh and pgp), `seahorse` is the program
-to use for import & export. 
-In order to add manually some password, the best is to use `secret-tool`.
-```
-sudo apt-get install libsecret-tools
-```
-
-### power management
-
-http://tipsonubuntu.com/2018/11/18/quick-tip-improve-battery-life-ubuntu-18-04-higher/
-
-```
-sudo apt install tlp
-sudo add-apt-repository ppa:linuxuprising/apps
-sudo apt install tlpui
-```
-
-Run by `pkexec /usr/sbin/lmt-config-gui`
-
-Alternatively, there is another utility which seems to be better : `powertops`
-https://wiki.archlinux.org/index.php/powertop
-
-
-All of that didn't work very well, I finally found a bug from the previous generation
-which seems still valid in the xps 13 9380. Basically, the laptop goes to sleep in
-sleep2idle instead of deep sleep. 
-
-The fix is described here :
-https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1808957
-
-> sudo journalctl | grep "PM: suspend" | tail -2. If the output is
-> PM: suspend entry (s2idle)
-> PM: suspend exit
-> cat /sys/power/mem_sleep showed
-> [s2idle] deep
-> As a temporary fix, I typed
-> echo deep > /sys/power/mem_sleep
-> as a root user (sudo -i).
-> Then the output of cat /sys/power/mem_sleep was
-> s2idle [deep]
-> After suspending now,
-> sudo journalctl | grep "PM: suspend" | tail -2 returns
-> PM: suspend entry (deep)
-> PM: suspend exit
-> I have made this permanent by editing
-> /etc/default/grub
-> and replacing
-> GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
-> with
-> GRUB_CMDLINE_LINUX_DEFAULT="quiet splash mem_sleep_default=deep"
-> then regenerating my grub configuration (sudo grub-mkconfig -o /boot/grub/grub.cfg).
-> This appears to be working with no ill effects.
 
 
 ## Local network
@@ -217,6 +288,7 @@ Bellow are the lines to add at the end of `/etc/fstab` file which should contain
 TODO : seems the partitions are not mounted automatically at reboot ???
 
 ### nextcloud
+
 I use nextcloud client to synchronise with my local cloud (NAS) and remote private cloud
 https://launchpad.net/~nextcloud-devs/+archive/ubuntu/client
 ```
@@ -237,16 +309,20 @@ I'd like to remove icons from the desktop, first install `sudo apt-get install d
 Launch `dconf-editor` and Locate /org/gnome/desktop/background/ and untick the show desktop icons.
 
 ### conky
+
 ```
 sudo apt-get install conky-all
 ```
 
 See [./conky/.conkyrc](./conky/.conkyrc) in this repo for conky configuration.
+
 Thanks : https://www.splitbrain.org/blog/2016-11/20-simple_conky_setup
 
 Then add it to startup with `gnome-session-properties`
 
 ### Chinese
+
+Just follow this guide :
 
 https://www.pinyinjoe.com/linux/ubuntu-18-gnome-chinese-setup.htm
 
@@ -269,7 +345,7 @@ For darktable, it's better to activate openCL capabilities :
 ```
 sudo apt install ocl-icd-opencl-dev
 ``` 
-TODO fix the config issues
+**Note:** this is not working so we have a TODO fix the config issues
 
 
 ## Editing
@@ -347,15 +423,58 @@ sudo apt-get install libclang-dev
 sudo dpkg -i rstudio-1.2.1280-amd64.deb
 ```
 
+### Travis
+
+I use travis for continuous integration with github and for blogdown / hugo 
+websites. It's important to well configure the security for two aspects :
+
+- encrypted System Environement variables
+- keys for ssh deployment
+
+#### Secure Environment variables
+
+I followed this guide :
+https://brettdewoody.com/secure-environment-variables-with-travis/
+
+
+First, install the travis gem:
+
+```
+gem install travis
+```
+
+Then in your project directory run:
+
+```
+travis encrypt DB_URL=super_secret
+```
+
+This will return an encrypted string which can be added to the project's
+.travis.yml file.
+
+The .travis.yml file will now contain an entry of:
+
+```
+env:
+  secure: MBxG/gsqeyONzA7wbWKACzv...
+```
+
+
+#### Secure deployment keys
+
+TODO : write down the documentation here
+
+
+
 
 ## e-mail
 
 ### Get packages 
 
 Install necessary packages, for emailing we need, `mutt` as a client, 
-`offlineimap` to get emails, `msmtp` to send emails (in fact `msmtp-gnome` pacakge
-to  get keyring support).  Email passwork will be stored in gnome keyring and we
-will use python keyring to access the keyring.
+`offlineimap` to get emails, `msmtp` to send emails (in fact `msmtp-gnome` 
+pacakge to  get keyring support).  Email passwork will be stored in gnome 
+keyring and we will use python keyring to access the keyring.
 
 ```
 sudo apt-get install mutt offlineimap python-keyring msmtp msmtp-gnome
@@ -370,7 +489,8 @@ https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_s
 
 ### Step two: password & auth management
 
-We will store the email password in keyring, to add you email password in the keyring :
+We will store the email password in keyring, to add you email password in the
+keyring :
 
 ```
 $ python2
