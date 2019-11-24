@@ -348,6 +348,25 @@ sudo apt install ocl-icd-opencl-dev
 **Note:** this is not working so we have a TODO fix the config issues
 
 
+### Digikam
+
+We use also digikam to manage photo collection stored on NAS.
+We use mysql (mariaDb).
+
+```
+sudo apt-get install digikam
+sudo apt-get install libqt5sql5-mysql
+```
+
+When launching digikam need to use credential on the NAS, db names :
+
+- digikam
+- digikam-recognition
+- digikam-thumbnails
+
+
+
+
 ## Editing
 
 ### `scribus`
@@ -464,7 +483,16 @@ env:
 
 TODO : write down the documentation here
 
+### Postman
 
+API development can be a nightmare if you cannot test easily, postman is the 
+answer :
+
+https://linuxize.com/post/how-to-install-postman-on-ubuntu-18-04/
+
+```
+sudo snap install postman
+```
 
 
 ## e-mail
@@ -570,3 +598,21 @@ sudo dpkg -i sonos-controller-unofficial-amd64.deb
 ### qgis
 sudo apt-get install qgis
 
+
+## Security
+
+https://upcloud.com/community/tutorials/scan-ubuntu-server-malware/
+
+### Evaluation
+
+```
+sudo apt-get install lynis
+sudo lynis audit system
+```
+
+### Main changes
+
+https://kifarunix.com/install-and-configure-aide-on-ubuntu-18-04/
+```
+sudo apt-get install aide
+```
