@@ -63,6 +63,26 @@ For most of my admin work and text edition I use Vim
 sudo apt-get install vim
 ``` 
 
+Vim is coming with plenty of packages, for autocompletion, terraform, etc...
+The best is to set-up a package manager like ![vundle](https://github.com/VundleVim/Vundle.vim)
+
+The install process is pretty straighforward.
+
+```
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
+
+Then edit your .vimrc to use vundle, adding the configuration mentionned in the online
+document.
+
+And then to set-up a new plugin, like hashicorp terraform plugin, add the following to ~/.vimrc:
+```
+Plugin 'hashivim/vim-terraform'
+```
+
+
+
+
 ### Package management
 
 To handle packages, I still find synaptic useful & apt-file to search
