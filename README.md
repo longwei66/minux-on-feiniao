@@ -79,7 +79,12 @@ And then to set-up a new plugin, like hashicorp terraform plugin, add the follow
 ```
 Plugin 'hashivim/vim-terraform'
 ```
+Once this is done you can check which plugins are listed and install them.
+from vim :
 
+- `:PluginList` to check list of plugins
+- `:PluginInstall` to install these
+- ...
 
 
 
