@@ -86,6 +86,12 @@ from vim :
 - `:PluginInstall` to install these
 - ...
 
+Other plugins :
+
+- autocompletion : https://github.com/roxma/nvim-yarp (should need `pip3 install pynvimi`), https://github.com/ncm2/ncm2
+- nvim-R : https://github.com/jalvesaq/Nvim-R https://github.com/gaalcaras/ncm-R
+
+
 
 
 ### Package management
