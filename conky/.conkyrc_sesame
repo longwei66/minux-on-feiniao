@@ -1,0 +1,145 @@
+conky.config = {
+    use_xft = true,
+    xftalpha = 0.8,
+    update_interval = 1.0,
+    total_run_times = 0,
+    own_window = true,
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_type = 'normal',
+    own_window_class = 'conky-semi',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    background = false,
+    double_buffer = true,
+    imlib_cache_size = 0,
+    no_buffers = true,
+    uppercase = false,
+    cpu_avg_samples = 2,
+    override_utf8_locale = true,
+
+    -- placement
+    alignment = 'top_right',
+    gap_x = 10,
+    gap_y = 50,
+
+    -- default drawing
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = true,
+    default_bar_width = 100, default_bar_height = 5,
+    default_graph_width = 100, default_graph_height = 12,
+    default_gauge_width = 10, default_gauge_height = 10,
+
+    -- colors
+    font = 'Liberation Mono:size=10',
+    default_color = 'EEEEEE',
+    color0 = '51908B',
+    color1 = '3F5965',
+    color2 = 'A0B7B3',
+    color3 = 'DDCEC3',
+    color4 = 'C2B4B1',
+    color5 = 'C7364E',
+
+    -- layouting
+    template0 = [[${font Liberation Sans:bold:size=11}${color0}\1 ${color3}${hr 2}${font}]],
+    template1 = [[${font Mono Sans:size=10}${color1}\1]],
+    template2 = [[${font Mono Sans:size=9}${goto 90}${color2}]],
+    template3 = [[${font Mono Sans:size=8}${goto 200}${color3}${alignr}]],
+    template4 = [[${font Mono Sans:size=7}${goto 100}${color4}${alignr}]],
+};
+
+conky.text = [[
+# -----------------------------------
+#  System information
+# -----------------------------------
+${template0 System}
+${template1 Date}         ${template3}${time %a,}${time %e %B %G} - ${time %T}
+${template1 Hostname}     ${template3}${nodename}
+${template1 ${sysname}}   ${template3}${kernel}-${machine}
+${template1 Uptime}       ${template3}${uptime_short}
+${template1 Users}        ${template3}${user_names}
+
+# -----------------------------------
+#  Processors
+# -----------------------------------
+${template0 Processors}
+
+${template1 CPU}          ${template2}${freq_g}GHz                ${template3}${cpugraph cpu0 40,250 51908B C7364E}
+                                                                  ${template3}${execi 30 sensors | grep "Package" | sed -rn 's/.*Package id 0:\s+([^ ]+).*/\1/p'} | ${cpu cpu}% 
+
+${template1 Core\ 1_2}    ${template2}${execi 30 sensors | grep "Core 0" | sed -rn 's/.*Core 0:\s+([^ ]+).*/\1/p'} | ${cpu cpu1}% ${cpu cpu2}%  ${template3}${cpubar cpu1}${cpubar cpu2}
+${template1 Core\ 3_4}    ${template2}${execi 30 sensors | grep "Core 1" | sed -rn 's/.*Core 1:\s+([^ ]+).*/\1/p'} | ${cpu cpu3}% ${cpu cpu4}%  ${template3}${cpubar cpu3}${cpubar cpu4}
+${template1 Core\ 5_6}    ${template2}${execi 30 sensors | grep "Core 2" | sed -rn 's/.*Core 2:\s+([^ ]+).*/\1/p'} | ${cpu cpu5}% ${cpu cpu6}%  ${template3}${cpubar cpu5}${cpubar cpu6}
+${template1 Core\ 7_8}    ${template2}${execi 30 sensors | grep "Core 3" | sed -rn 's/.*Core 3:\s+([^ ]+).*/\1/p'} | ${cpu cpu7}% ${cpu cpu8}%  ${template3}${cpubar cpu7}${cpubar cpu8}
+
+${template1 Top}          ${template2} ${top name 1}              ${template3}${top cpu 1} %
+                          ${template2} ${top name 2}              ${template3}${top cpu 2} %
+                          ${template2} ${top name 3}              ${template3}${top cpu 3} %
+                          ${template2} ${top name 4}              ${template3}${top cpu 4} %
+                          ${template2} ${top name 5}              ${template3}${top cpu 5} %
+
+# -----------------------------------
+#  Graphics
+# -----------------------------------
+${template0 Graphics}
+
+${template1 GPU}          ${template2}${exec nvidia-smi -q -g 0 2>&1 | grep "Product Name" | sed 's/.*: //g' } - driver ${exec nvidia-smi -q -g 0 2>&1 | grep "Driver Version" | sed 's/.*: //g' }${template3}${execpi 3   nvidia-smi -q -g 0 2>&1 | grep '\.*C$' | sed 's/[^0-9]*//g'}°C
+                          ${template2}MiB ${execpi 3  nvidia-smi -q -g 0 2>&1 | grep Used | sed 's/[^0-9]*//g'| sed  '/^$/d'} / ${execpi 3  nvidia-smi -q -g 0 2>&1 | grep Total | sed 's/[^0-9]*//g' | sed  '/^$/d'} ${template3}Fan ${execpi 3  nvidia-smi -q -g 0 2>&1 | grep Fan | sed 's/[^0-9]*//g'}% 
+
+# -----------------------------------
+#  Ram & Swap
+# -----------------------------------
+${template0 Memory}
+
+${template1 RAM}          ${template2}${memperc}% used            ${template3}${membar 7,250}
+                                                                  ${template3}${mem} / ${memmax}
+
+${template1 Swap}         ${template2}${swapperc}% used           ${template3}${swapbar 7,250}
+                                                                  ${template3}${swap} / ${swapmax}
+
+${template1 Top}          ${template2}${top_mem name 1}           ${template3}${top_mem mem 1} %
+                          ${template2}${top_mem name 2}           ${template3}${top_mem mem 2} %
+                          ${template2}${top_mem name 3}           ${template3}${top_mem mem 3} %
+                          ${template2}${top_mem name 4}           ${template3}${top_mem mem 4} %
+                          ${template2}${top_mem name 5}           ${template3}${top_mem mem 5} %
+
+# -----------------------------------
+#  Filesystem
+# -----------------------------------
+${template0 Filesystem}
+
+${template1 /}            ${template2}free ${fs_free /}           ${template3}${fs_bar 7,250 /}
+                                                                  ${template4}${fs_used /} / ${fs_size /} 
+${template1 /data}        ${template2}free ${fs_free /data}       ${template3}${fs_bar 7,250 /data}
+                                                                  ${template4}${fs_used /data} / ${fs_size /data} 
+${template1 /photo}       ${template2}free ${fs_free /photo}      ${template3}${fs_bar 7,250 /photo}
+                                                                  ${template4}${fs_used /photo} / ${fs_size /photo}
+${template1 /multimedia}  ${template2}free ${fs_free /multimedia} ${template3}${fs_bar 7,250 /multimedia}
+                                                                  ${template4}${fs_used /multimedia} / ${fs_size /multimedia} 
+${template1 /lagrange}    ${template2}free ${fs_free /media/lagrange/homes/lagrange_barthelemy}  ${template3}${fs_bar 7,250 /media/lagrange/homes/lagrange_barthelemy}
+                                                                  ${template4}${fs_used /media/lagrange/homes/lagrange_barthelemy} / ${fs_size /media/lagrange/homes/lagrange_barthelemy} 
+
+${template1 IO}                                                   ${template3}${diskiograph_read 30,120 51908B C7364E}  ${diskiograph_write 30,120 51908B C7364E}
+                                                                  ${template3}${diskio_read}R                                   ${diskio_write}W
+# -----------------------------------
+#  Networking
+# -----------------------------------
+${template0 Networking}
+
+${if_existing /proc/net/route enp5s0}\
+${template1 Interfaces}   ${template2}${totaldown enp5s0}↓-${totalup enp5s0}↑   ${template3}${addr enp5s0} / ${execi 1000 wget http://ipinfo.io/ip -qO -}
+${template1 Activity}                                             ${template3}${downspeedgraph enp5s0 30,120 51908B C7364E}   ${upspeedgraph enp5s0 30,120 51908B C7364E}
+                                                                  ${template3}${downspeed enp5s0}↓                              ${upspeed enp5s0}↑
+${endif}\
+
+# -----------------------------------
+#  Others
+# -----------------------------------
+${template0 Others}
+${template1 Weather}      ${template2}${execi 300 curl http://wttr.in/Ville-d\'Avray?format=%22%l:+%C+%t+%w+%p%22}
+                          ${template2}${execi 300 curl http://wttr.in/Egletons?format=%22%l:+%C+%t+%w+%p%22}
+                          ${template2}${execi 300 curl http://wttr.in/Shanghai?format=%22%l:+%C+%t+%w+%p%22}
+
+
+]];
