@@ -4,6 +4,33 @@
 repository gathers all the documentation and scripts to install and fine tune
 ubuntu.
 
+## Debiand unstable (10 / sid) on Dell XPS 13 2019
+
+### Introduction
+
+After one year running ubuntu 18.04, and a failed attempt to resize my swap
+lvm volume leading to a kind of bricked system, I decided to make a fresh
+debian install.
+
+### Install process
+
+#### References
+
+I use the following web site to guide the main steps (Thanks Cedric Dufour).
+http://cedric.dufour.name/blah/IT/DellXps9380DebianBuster.html
+
+#### Downloading the iso
+
+I am using [this iso](https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/daily-builds/sid_d-i/current/amd64/iso-cd/) for the unstable including non-free drivers.
+
+#### Some notes for install
+
+The install process is pretty straigthforward, go to expert mode, activate wifi
+ with non free drivers. I used a lvm partition with three logical volumes 
+for "/" "/home" and "/swap". I use 16G of swap even if the laptop has plenty
+of RAM is some data science process, I need swap.
+
+
 
 ## Ubuntu configuration on Dell XPS 13 2019. 
 
@@ -13,7 +40,7 @@ install it again but it's buggy (hdd encryption password not recognized).
 
 See this [post](https://www.dell.com/community/Linux-Developer-Systems/XPS-13-9370-Ubuntu-full-disk-encryption/td-p/6200577) for details.
 
-So I decided to make a **fresh install** of ubuntu 18.04.
+So I decided to make a **fresh install** of ubuntu 18.04
 
 __About the system__
 
