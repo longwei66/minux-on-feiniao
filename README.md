@@ -30,6 +30,74 @@ The install process is pretty straigthforward, go to expert mode, activate wifi
 for "/" "/home" and "/swap". I use 16G of swap even if the laptop has plenty
 of RAM is some data science process, I need swap.
 
+I choose also the kernel modules adapted to the configuraiton to have a slick
+system. I might pay this back later when plugin some exotic hardware. Wait 
+and see.
+
+I don't install gnome, and just choose xcfe + debian graphical interfce.
+Don't forget to add your user to the list of sudoers.
+
+### Post install process
+
+Following the boot, I follow the reference give above to fix few point
+regarding configuration of hardware and high DPi screen.
+
+#### HiDPI configuration
+
+**GRUB**
+
+Update `/etc/default/grub` with
+
+```
+GRUB_GFXMODE="1280x1024x32"
+GRUB_GFXPAYLOAD_LINUX="keep"
+GRUB_TERMINAL="gfxterm"
+GRUB_CMDLINE_LINUX="video=1920x1080"
+```
+
+And then `sudo update-grub`
+
+**LightDM greeter**
+
+This section of the reference above is not really working, to be fixed later.
+We will have a very small lightdm greeter.
+
+**XFCE desktop**
+
+Configure fonts scaling in XFCE Menu / Settings / Apprearance / Fonts / DPI
+as 160.
+
+#### Hardware support
+
+Using the non-free installer, there is no need to install more packages for
+hardware support, they are just listed here for reference.
+
+```
+firmware-misc-nonfree
+xserver-xorg-video-intel
+i965-va-driver
+libvdpau-va-gl1
+firmware-atheros
+server-xorg-input-synaptics
+```
+
+**PS/2 Mouse**
+
+We have to blacklist the mouse.
+
+First edit this file :
+
+```
+# /etc/modprobe.d/psmouse-disable.conf
+blacklist psmouse
+```
+
+and
+
+```
+update-initramfs -u
+``` 
+
 
 
 ## Ubuntu configuration on Dell XPS 13 2019. 
