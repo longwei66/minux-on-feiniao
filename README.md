@@ -127,6 +127,23 @@ when needed
 export PATH="$PATH:/snap/bin"
 ``` 
 
+### Updating to SID / Unstable
+
+The basic install was done using the testing debian stream, to switch to unsable / sid
+you just have to update source.list and change buster to unstable and comment security
+updates (which are done directly by packages maintainer in sid environement).
+
+```
+# testing
+deb http://deb.debian.org/debian/ testing main contrib non-free
+# dépôt sécurity testing 
+deb http://deb.debian.org/debian-security/ testing-security/updates main contrib non-free
+# unstable
+deb http://deb.debian.org/debian/ unstable main contrib non-free
+```
+More information here :
+https://debian-facile.org/doc:systeme:apt:sources.list:testing
+
 
 
 ## Ubuntu configuration on Dell XPS 13 2019. 
