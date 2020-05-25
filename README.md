@@ -37,6 +37,21 @@ and see.
 I don't install gnome, and just choose xcfe + debian graphical interfce.
 Don't forget to add your user to the list of sudoers.
 
+**Note on swap**
+In previous install I had issues with system freeze while swaping, it seems to 
+work perfectly now, in case of doubt you can perform stress tests on your
+machine, monitoring with htop
+
+```
+sudo apt install htop stress-ng
+stress-ng --vm 2 --vm-bytes 1G --timeout 60s
+```
+
+You can increase the vm-byte step by step and check how swapping behaves.
+
+More information there :
+https://www.cyberciti.biz/faq/stress-test-linux-unix-server-with-stress-ng/
+
 ### Post install process
 
 Following the boot, I follow the reference give above to fix few point
