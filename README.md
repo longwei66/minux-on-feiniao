@@ -98,6 +98,20 @@ and
 update-initramfs -u
 ``` 
 
+### Additionnal packages
+
+```
+sudo apt install snapd
+snap install authy --beta
+```
+
+The path for snap is not update, for this I use a `.bash_profile` file which I source
+when needed
+
+```
+export PATH="$PATH:/snap/bin"
+``` 
+
 
 
 ## Ubuntu configuration on Dell XPS 13 2019. 
