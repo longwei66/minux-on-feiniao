@@ -14,7 +14,7 @@ debian install.
 
 ### Install process
 
-#### References
+#### References
 
 I use the following web site to guide the main steps (Thanks Cedric Dufour).
 http://cedric.dufour.name/blah/IT/DellXps9380DebianBuster.html
@@ -37,10 +37,9 @@ and see.
 I don't install gnome, and just choose xcfe + debian graphical interfce.
 Don't forget to add your user to the list of sudoers.
 
-**Note on swap**
-In previous install I had issues with system freeze while swaping, it seems to 
-work perfectly now, in case of doubt you can perform stress tests on your
-machine, monitoring with htop
+**Note on swap** : In previous install I had issues with system freeze while
+ swaping, it seems to work perfectly now, in case of doubt you can perform 
+stress tests on your machine, monitoring with htop
 
 ```
 sudo apt install htop stress-ng
@@ -143,6 +142,70 @@ deb http://deb.debian.org/debian/ unstable main contrib non-free
 ```
 More information here :
 https://debian-facile.org/doc:systeme:apt:sources.list:testing
+
+
+### Power Management
+
+Debian sid is handling power management on my machine much better than ubuntu. I 
+don't know yet the reason but powertops is working well and I have now issue.
+
+The only change that I made is concerning the suspend mode, I prefer to use
+deep sleep than s2idle.
+
+```
+cat /sys/power/mem_sleep
+```
+showed
+```
+[s2idle] deep
+```
+As a temporary fix, I typed
+```
+echo deep > /sys/power/mem_sleep
+```
+as a root user (sudo -i).
+Then the output of 
+```
+cat /sys/power/mem_sleep was
+s2idle [deep]
+```
+After suspending now,
+```
+sudo journalctl | grep "PM: suspend" | tail -2 returns
+PM: suspend entry (deep)
+PM: suspend exit
+```
+I have made this permanent by editing
+```
+sudo vim /etc/default/grub
+```
+and replacing
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+```
+with
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet mem_sleep_default=deep"
+```
+then regenerating my grub configuration :
+```
+update-grub
+```
+This appears to be working with no ill effects.
+
+### Install R & Rstudio
+
+There is a good guide available :
+https://cran.rstudio.com/bin/linux/debian/#debian-sid-unstable
+
+Install R-base system (it will be version 4.x as we are on unstable
+
+
+Then for Rstudio, let's use the preview version (let's be crazy) to be 
+installed with `gdebi`.
+
+https://rstudio.com/products/rstudio/download/preview/
+
 
 
 
