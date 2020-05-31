@@ -206,8 +206,10 @@ installed with `gdebi`.
 
 https://rstudio.com/products/rstudio/download/preview/
 
-
-
+For Rstudio, you need to install ssh-askpass
+```
+sudo apt install ssh-askpass
+```
 
 ## Ubuntu configuration on Dell XPS 13 2019. 
 
@@ -475,7 +477,7 @@ sudo apt-get install qBittorrent
 
 
 
-## Local network
+## File Share, local & cloud
 
 ### shared folders
 I use a NAS and basically need to mount the shared folders I use. I need here to modify `/etc/fstab`
@@ -536,7 +538,39 @@ I configure my login and launch of the add at startup.
 http://192.168.2.108/owncloud
 
 
+### Digital Ocean Spaces
+
+Now that I have enough bandwidth, I store the data used in my dataprojects in 
+a secure Digital Ocean Space.
+
+> Digital Ocean spaces S3-compatible object storage with a built-in CDN that makes
+ scaling easy, reliable, and affordable.
+
+```
+sudo apt install s3fs
+mkdir ~/do
+```
+
+You should configure your .bash_profile with SPACE_KEY & SPACES_SECRET or
+create a ~/.passwd-s3fs
+
+```
+echo $SPACES_KEY:$SPACES_SECRET > ~/.passwd-s3fs
+chmod 600 ~/.passwd-s3fs
+s3fs your-space /path/to/local/directory -ourl=https://nyc3.digitaloceanspaces.com -ouse_cache=/tmp
+```
+
+
+
 ## Desktop
+
+### XFCE
+
+Add shortcut in preferences associated with this command
+
+```
+xfce4-session-logout --suspend
+```
 
 ### gnome 3
 
