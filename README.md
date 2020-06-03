@@ -211,6 +211,24 @@ For Rstudio, you need to install ssh-askpass
 sudo apt install ssh-askpass
 ```
 
+### Communication tools
+
+For Skype :
+
+https://computingforgeeks.com/how-to-install-skype-on-debian/
+
+```
+wget https://go.skype.com/skypeforlinux-64.deb
+sudo dpkg -i ./skypeforlinux-64.deb
+```
+
+This installation will add apt repository to /etc/apt/sources.list.d/skype-stable.list.
+
+
+
+
+
+
 ## Ubuntu configuration on Dell XPS 13 2019. 
 
 Ubuntu is pre-installed on this Dell laptop, but their installation does not
