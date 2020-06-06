@@ -647,3 +647,38 @@ https://kifarunix.com/install-and-configure-aide-on-ubuntu-18-04/
 ```
 sudo apt-get install aide
 ```
+
+
+
+## Note on ubuntu 20.04 install on sesame
+
+### Add nomodeset to grub 
+
+```
+sudo vim /etc/default/grub
+```
+
+and then add nomodeset to GRUB_CMDLINE_LINUX_DEFAULT:
+
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nomodeset"
+```
+```
+sudo update-grub
+```
+
+### Add swapfile
+
+https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-20-04/
+
+### Remove snap
+
+https://www.kevin-custer.com/blog/disabling-snaps-in-ubuntu-20-04/
+
+
+### Install XCFE
+https://linuxconfig.org/install-xfce-xubuntu-desktop-on-ubuntu-20-04-focal-fossa-linux
+
+
+
+
