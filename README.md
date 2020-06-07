@@ -680,5 +680,22 @@ https://www.kevin-custer.com/blog/disabling-snaps-in-ubuntu-20-04/
 https://linuxconfig.org/install-xfce-xubuntu-desktop-on-ubuntu-20-04-focal-fossa-linux
 
 
+### Instal R & geographic packages
 
+Let's take the opportunity of this fresh install of 20.04 to move to R 4.0.
+Found a great tutorial to do so :
 
+https://rtask.thinkr.fr/fr/installation-de-r-4-0-sur-ubuntu-20-04-lts-et-astuces-pour-les-packages-de-cartographie/
+
+```
+gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+gpg -a --export E298A3A825C0D65DFD57CBB651716619E084DAB9 | sudo apt-key add -
+sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
+sudo apt install r-base r-base-core r-recommended r-base-dev
+sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+
+sudo apt update
+sudo apt install r-cran-rgl r-cran-rjags r-cran-snow r-cran-ggplot2 r-cran-igraph r-cran-lme4 r-cran-rjava r-cran-devtools r-cran-roxygen2 r-cran-rjava
+sudo apt install libgdal-dev libproj-dev libgeos-dev libudunits2-dev libnode-dev libcairo2-dev libnetcdf-dev
+sudo apt install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+```
+Then we install Rstudio preview
