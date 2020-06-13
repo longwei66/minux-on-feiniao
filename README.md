@@ -225,8 +225,18 @@ sudo dpkg -i ./skypeforlinux-64.deb
 This installation will add apt repository to /etc/apt/sources.list.d/skype-stable.list.
 
 
+### Configure Chinese input
 
+Configuration of chinese input is quite easy, there are just two
+packages to install.
 
+Check this wiki for reference : https://wiki.debian.org/InputMethodBuster
+```
+sudo apt install ibus ibus-libpinyin
+ibus-daemon --xim -d
+```
+Then configure the input removing english and adding french & chinese.
+This will run automatically after reboot
 
 
 ## Ubuntu configuration on Dell XPS 13 2019. 
