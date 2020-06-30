@@ -126,6 +126,13 @@ when needed
 export PATH="$PATH:/snap/bin"
 ``` 
 
+### ssh configuration
+
+Copy back your keys and install these in ~/.ssh with 600 permission mode.
+Then you need to add your keys to your ssh-agent by doing `ssh-add ~/.ssh/id_rsa` if
+standard key.
+
+
 ### Updating to SID / Unstable
 
 The basic install was done using the testing debian stream, to switch to unsable / sid
