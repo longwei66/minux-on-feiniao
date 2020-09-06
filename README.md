@@ -821,15 +821,35 @@ https://wiki.archlinux.org/index.php/OfflineIMAP#Option_2:_gnome-keyring-query_s
 
 ### Step two: password & auth management
 
-We will store the email password in keyring, to add you email password in the
-keyring :
+We will store the email password in seahorse which can be installed as package :
 
 ```
-$ python2
->>> import is Readme
-Thkeyring
->>> keyring.set_password("offlineimap","username@host.net", "MYPASSWORD")
+sudo apt install seahorse
 ```
+
+The create an record for your passwordi with description = your_user@your_server.net.
+We will use the 3rd option to manage passwords in offlineimaprc with a script 'gkgetsecret.py'
+
+Store the script `gkgetsecret.py` available [here](https://github.com/charlesbos/my-scripts/blob/master/gkgetsecret.py).
+
+Then in offlineimap change the two following parameters :
+
+```
+[Repository remote_main]
+
+# to get the server fingerprint :
+# openssl s_client -connect neomailbox.net:993 -servername neomailbox.net -showcerts < /dev/null 2>/dev/null   | openssl x509 -in /dev/stdin -sha1 -noout -fingerprint
+#cert_fingerprint = <SHA1_of_server_certificate_here>
+cert_fingerprint = 31:2C:....
+
+remote_user = your_user
+remotepasseval = get_pw_from_desc("your_user@your_server.net")
+
+
+```
+
+
+
 
 ### Step three: automation of get emails
 
