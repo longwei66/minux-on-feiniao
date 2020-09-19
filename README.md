@@ -112,6 +112,15 @@ and
 update-initramfs -u
 ``` 
 
+#### Fonts configuration
+
+to get google fonts
+https://gist.github.com/keeferrourke/d29bf364bd292c78cf774a5c37a791db
+
+
+
+
+
 ### Additionnal packages
 
 ```
